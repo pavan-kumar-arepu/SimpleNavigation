@@ -3,7 +3,6 @@ package com.ppam.simplenavigation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.gestures.ModifierLocalScrollableContainerProvider.value
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,6 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.ppam.simplenavigation.ui.theme.SimpleNavigationTheme
 
 class MainActivity : ComponentActivity() {
@@ -36,6 +38,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 //                    Greeting("Android")
+                    MyApp()
                 }
             }
         }
@@ -43,29 +46,18 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun FirstScreen() {
-    val name = remember {
-        mutableStateOf("")
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "This is First Screen", fontSize = 24.sp)
-        Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(value = name.value, onValueChange = {
-            name.value = it
-        })
-        Button(onClick = {
-
-        }) {
-            Text("Go to Second Screen")
+fun MyApp() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "firstscreen"){
+        composable("firstscreen") {
+            FirstScreen {
+                navController.navigate("secondscreen")
+            }
         }
-
+        composable("secondscreen") {
+            SecondScreen {
+                navController.navigate("firstscreen")
+            }
+        }
     }
 }
-
