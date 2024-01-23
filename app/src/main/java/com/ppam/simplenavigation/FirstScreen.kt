@@ -32,11 +32,17 @@ fun FirstScreen(navigationToSecondScreen:(String)->Unit) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "This is First Screen", fontSize = 24.sp)
+        Text(text = "This is First Screen", fontSize = 24.sp,
+            )
         Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(value = name.value, onValueChange = {
+        OutlinedTextField(value = name.value,
+            label = { Text(text = "Name") },
+            onValueChange = {
             name.value = it
         })
+
+        
+        Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
             navigationToSecondScreen(name.value)
         }) {
@@ -46,8 +52,8 @@ fun FirstScreen(navigationToSecondScreen:(String)->Unit) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun FirstScreenPreview() {
-    FirstScreen({})
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun FirstScreenPreview() {
+//    FirstScreen({})
+//}
